@@ -1,0 +1,39 @@
+@startuml
+
+title Application Architecture
+
+actor User
+
+package Client {
+    [UI]
+    [REST API Client]
+    [WebSocket Client]
+}
+
+User --> [UI]
+[UI] --> [WebSocket Client]
+[UI] --> [REST API Client]
+
+package Server {
+    [REST API Server]
+    [WebSocket Server]
+
+    package "Authentication Service" as Auth {
+        [JWT]
+    }
+}
+
+[WebSocket Client] --> [WebSocket Server]
+[REST API Client] --> [REST API Server]
+[REST API Server] -left-> [JWT]
+
+database "Database" as Database {
+  [Message Storage]
+  [User Data]
+}
+
+[WebSocket Server] --> [Message Storage]
+[REST API Server] --> [Message Storage]
+[JWT] --> [User Data]
+
+@enduml
