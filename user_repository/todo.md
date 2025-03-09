@@ -1,0 +1,6 @@
+- [ ] feat: extract UserRepository interface from InMemoryUserRepository
+- [ ] feat: add InMemoryUserRepository for user data storage
+- [ ] feat: implement CRUD operations for InMemoryUserRepository
+- [x] feat: return proper error when user is not found
+- [ ] store users in map?
+- [ ] type User?
