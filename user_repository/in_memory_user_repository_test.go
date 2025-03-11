@@ -9,6 +9,29 @@ import (
 var _ = Describe("InMemoryUserRepository", func() {
 	var repo *user_repository.InMemoryUserRepository
 
+	setupRepo := func(users ...user_repository.User) {
+		repo = &user_repository.InMemoryUserRepository{Users: users}
+	}
+
+	Describe("Test Utilities", func() {
+		DescribeTable("repository state inspection",
+			func(users []user_repository.User, expectedLen int, expectedPeek string) {
+				setupRepo(users...)
+				Expect(repo.Len()).To(Equal(expectedLen))
+				Expect(repo.Peek()).To(Equal(expectedPeek))
+			},
+			Entry("empty repository", []user_repository.User{}, 0, ""),
+			Entry("repository with users",
+				[]user_repository.User{
+					{ID: 0, Active: false, Email: "test@test.com"},
+					{ID: 1, Active: true, Email: "test@test.com"},
+				},
+				2,
+				"{-0, test@test.com}\n{+1, test@test.com}",
+			),
+		)
+	})
+
 	Describe("FindUser", func() {
 		When("the user does not exist", func() {
 			It("should return nil", func() {
