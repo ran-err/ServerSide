@@ -3,12 +3,13 @@
 - [ ] feat: implement CRUD operations for `InMemoryUserRepository`
 
 - [x] test: add `Len` and `Peek` functions for inspecting internal state
-- [ ] test: add helper functions and slices for creating `InMemoryUserRepository` 
+- [x] test: add helper functions and slices for creating `InMemoryUserRepository` 
 
 - [x] feat: add `New` functions for `InMemoryUserRepository`
 - [ ] refactor: move `InMemoryUserRepository` to its own package
 
 - [x] feat: return proper error when user is not found
+- [ ] feat: implement logic for FindUserByEmail function
 - [ ] feat: add `CreateUser` function
 - [ ] feat: add `UpdateUser` function
 - [ ] feat: add `DeleteUser` function

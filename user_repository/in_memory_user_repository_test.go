@@ -12,6 +12,12 @@ var _ = Describe("InMemoryUserRepository", func() {
 	setupRepo := func(users ...user_repository.User) {
 		repo = &user_repository.InMemoryUserRepository{Users: users}
 	}
+	emptyRepo := []user_repository.User{}
+	basicRepo := []user_repository.User{
+		{ID: 0, Active: false, Email: "test@test.com"},
+		{ID: 1, Active: true, Email: "test@test.com"},
+		{ID: 2, Active: true, Email: "user@example.com"},
+	}
 
 	Describe("Test Utilities", func() {
 		DescribeTable("repository state inspection",
@@ -20,15 +26,9 @@ var _ = Describe("InMemoryUserRepository", func() {
 				Expect(repo.Len()).To(Equal(expectedLen))
 				Expect(repo.Peek()).To(Equal(expectedPeek))
 			},
-			Entry("empty repository", []user_repository.User{}, 0, ""),
-			Entry("repository with users",
-				[]user_repository.User{
-					{ID: 0, Active: false, Email: "test@test.com"},
-					{ID: 1, Active: true, Email: "test@test.com"},
-				},
-				2,
-				"{-0, test@test.com}\n{+1, test@test.com}",
-			),
+			Entry("empty repository", emptyRepo, len(emptyRepo), ""),
+			Entry("repository with users", basicRepo, len(basicRepo),
+				"{-0, test@test.com}\n{+1, test@test.com}\n{+2, user@example.com}"),
 		)
 	})
 
@@ -43,17 +43,18 @@ var _ = Describe("InMemoryUserRepository", func() {
 
 	Describe("NewFromSlice", func() {
 		It("should return a new UserRepository instance with predefined users", func() {
-			repo = user_repository.NewFromSlice([]user_repository.User{
-				{ID: 0, Active: false, Email: "test@test.com"},
-				{ID: 1, Active: true, Email: "test@test.com"},
-			})
+			repo = user_repository.NewFromSlice(basicRepo)
 			Expect(repo).To(Not(BeNil()))
-			Expect(repo.Len()).To(Equal(2))
+			Expect(repo.Len()).To(Equal(len(basicRepo)))
 			Expect(repo.Peek()).To(ContainSubstring("test@test.com"))
 		})
 	})
 
 	Describe("FindUser", func() {
+		BeforeEach(func() {
+			setupRepo(basicRepo...)
+		})
+
 		When("the user does not exist", func() {
 			It("should return nil", func() {
 				user, err := repo.FindUserByEmail("phantom-user@example.com")
