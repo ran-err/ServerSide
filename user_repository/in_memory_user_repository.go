@@ -20,6 +20,14 @@ type InMemoryUserRepository struct {
 	Users []User
 }
 
+func New() *InMemoryUserRepository {
+	return &InMemoryUserRepository{Users: []User{}}
+}
+
+func NewFromSlice(users []User) *InMemoryUserRepository {
+	return &InMemoryUserRepository{Users: users}
+}
+
 func (r *InMemoryUserRepository) FindUserByEmail(email string) (*User, error) {
 	if email == "user@example.com" {
 		return &User{Email: "user@example.com"}, nil
