@@ -4,7 +4,7 @@
 
 - [x] test: add `Len` and `Peek` functions for inspecting internal state
 - [x] test: add helper functions and slices for creating `InMemoryUserRepository` 
-- [ ] test: ensure errors are checked first in tests
+- [x] test: ensure errors are checked first in tests
 
 - [x] feat: add `New` functions for `InMemoryUserRepository`
 - [ ] refactor: move `InMemoryUserRepository` to its own package
