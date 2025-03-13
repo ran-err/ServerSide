@@ -29,11 +29,12 @@ func NewFromSlice(users []User) *InMemoryUserRepository {
 }
 
 func (r *InMemoryUserRepository) FindUserByEmail(email string) (*User, error) {
-	if email == "user@example.com" {
-		return &User{Email: "user@example.com"}, nil
-	} else {
-		return nil, errors.New("user not found")
+	for _, user := range r.Users {
+		if user.Email == email && user.Active {
+			return &User{user.ID, user.Active, user.Email}, nil
+		}
 	}
+	return nil, errors.New("user not found")
 }
 
 func (r *InMemoryUserRepository) Len() int {

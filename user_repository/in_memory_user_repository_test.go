@@ -70,5 +70,15 @@ var _ = Describe("InMemoryUserRepository", func() {
 				Expect(err).To(BeNil())
 			})
 		})
+
+		When("multiple users share the same email, but only one is active", func() {
+			It("should return the active user's information", func() {
+				user, err := repo.FindUserByEmail("test@test.com")
+
+				Expect(err).To(BeNil())
+				Expect(user.Email).To(Equal("test@test.com"))
+				Expect(user.Active).To(BeTrue())
+			})
+		})
 	})
 })
