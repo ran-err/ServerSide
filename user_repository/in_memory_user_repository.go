@@ -6,14 +6,26 @@ import (
 	"strings"
 )
 
-type User struct {
-	ID     int
+type UserID struct {
+	ID int
+}
+
+type UserStatus struct {
 	Active bool
-	Email  string
+}
+
+type UserEmail struct {
+	Email string
+}
+
+type User struct {
+	UserID
+	UserStatus
+	UserEmail
 }
 
 func NewUser(id int, active bool, email string) User {
-	return User{ID: id, Active: active, Email: email}
+	return User{UserID: UserID{ID: id}, UserStatus: UserStatus{Active: active}, UserEmail: UserEmail{Email: email}}
 }
 
 // InMemoryUserRepository stores a slice of Users by value to:

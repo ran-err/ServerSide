@@ -20,5 +20,5 @@
 - [x] feat: add `ID` field to distinguish users
 - [x] feat: add `Active` field to distinguish between user states
 - [x] feat: store users in a slice
-- [ ] feat: wrap `ID`, `Active` and `Email` in dedicated types
+- [x] feat: wrap `ID`, `Active` and `Email` in dedicated types
 - [ ] refactor: move `User` to its own package
