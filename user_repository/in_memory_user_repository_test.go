@@ -9,14 +9,17 @@ import (
 var _ = Describe("InMemoryUserRepository", func() {
 	var repo *user_repository.InMemoryUserRepository
 
+	createUser := func(id int, active bool, email string) user_repository.User {
+		return user_repository.NewUser(id, active, email)
+	}
 	setupRepo := func(users ...user_repository.User) {
 		repo = &user_repository.InMemoryUserRepository{Users: users}
 	}
 	emptyRepo := []user_repository.User{}
 	basicRepo := []user_repository.User{
-		{ID: 0, Active: false, Email: "test@test.com"},
-		{ID: 1, Active: true, Email: "test@test.com"},
-		{ID: 2, Active: true, Email: "user@example.com"},
+		createUser(0, false, "test@test.com"),
+		createUser(1, true, "test@test.com"),
+		createUser(2, true, "user@example.com"),
 	}
 
 	Describe("Test Utilities", func() {

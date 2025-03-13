@@ -12,6 +12,10 @@ type User struct {
 	Email  string
 }
 
+func NewUser(id int, active bool, email string) User {
+	return User{ID: id, Active: active, Email: email}
+}
+
 // InMemoryUserRepository stores a slice of Users by value to:
 // 1. Optimize cache efficiency.
 // 2. Prevent unintended modifications.
@@ -31,7 +35,8 @@ func NewFromSlice(users []User) *InMemoryUserRepository {
 func (r *InMemoryUserRepository) FindUserByEmail(email string) (*User, error) {
 	for _, user := range r.Users {
 		if user.Email == email && user.Active {
-			return &User{user.ID, user.Active, user.Email}, nil
+			result := NewUser(user.ID, user.Active, user.Email)
+			return &result, nil
 		}
 	}
 	return nil, errors.New("user not found")
