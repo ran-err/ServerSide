@@ -1,0 +1,6 @@
+- [ ] Investigate potential internal memory issues with `dchest/captcha`
+- [x] Make CAPTCHA image size customizable
+- [x] Exclude "data:image/png;base64,"
+- [ ] Evaluate need for additional CAPTCHA encoding formats
+- [ ] Implement CAPTCHA expiration time
+- [ ] Implement custom CAPTCHA solutions
