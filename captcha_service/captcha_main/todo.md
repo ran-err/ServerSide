@@ -1,0 +1,1 @@
+- [ ] Move hardcoded strings into a configuration file
